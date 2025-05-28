@@ -1,49 +1,42 @@
 import { useState } from "react";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	Navigate,
+} from "react-router-dom";
 import Login from "./Login";
-import "./App.css";
+import Register from "./Register"; // Create this component if you haven't
+import Query from "./Query"; // Move your main app logic here
 
 function App() {
-	const [query, setQuery] = useState("");
 	const [loggedIn, setLoggedIn] = useState(false);
+
 	return (
-		<>
-			{loggedIn ? (
-				<div className="App">
-					<input
-						type="text"
-						placeholder="ask your question"
-						onChange={(e) => setQuery(e.target.value)}
-						value={query}
-					/>
-					<button
-						onClick={() => {
-							console.log("Query:", query);
-							fetch("/api/ask", {
-								method: "POST",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify({ query }),
-							})
-								.then((response) => console.log(response))
-								.then((response) => response.json())
-								.then((data) => {
-									console.log(data);
-								})
-								.catch((error) => {
-									console.error("Error:", error);
-								});
-						}}
-					>
-						Ask
-					</button>
-				</div>
-			) : (
-				<div>
-					<Login onLoginSuccess={() => setLoggedIn(true)} />
-				</div>
-			)}
-		</>
+		<Router>
+			<Routes>
+				<Route
+					path="/login"
+					element={<Login onLoginSuccess={() => setLoggedIn(true)} />}
+				/>
+				<Route
+					path="/register"
+					element={
+						<Register onRegisterSuccess={() => setLoggedIn(true)} />
+					}
+				/>
+				<Route
+					path="/"
+					element={
+						loggedIn ? (
+							<Query />
+						) : (
+							<Navigate to="/login" replace />
+						)
+					}
+				/>
+			</Routes>
+		</Router>
 	);
 }
 

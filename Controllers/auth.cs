@@ -54,14 +54,14 @@ public class RegisterController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register([FromBody] User user)
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-        if (user == null || string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.PasswordHash))
+        if (request == null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
         {
             return BadRequest("Invalid registration request.");
         }
 
-        var result = await _userManager.CreateAsync(user, user.PasswordHash);
+        var result = await _userManager.CreateAsync(request, request.Password);
         if (!result.Succeeded)
         {
             return BadRequest(result.Errors);

@@ -6,29 +6,3 @@ services:
             dockerfile: Dockerfile
         ports:
             - "3000:3000"
-        # volumes:
-        #     - ./ClientApp/client:/app/client
-        #     - ./ClientApp/client/dist:/app/client/dist
-
-        networks:
-            - default
-    db:
-        image: postgres:latest
-        environment:
-            POSTGRES_USER: user
-            POSTGRES_PASSWORD: password
-            POSTGRES_DB: mydatabase
-        ports:
-            - "5432:5432"
-        volumes:
-            - db_data:/var/lib/postgresql/data
-        networks:
-            - default
-
-volumes:
-    db_data:
-        driver: local
-
-networks:
-    default:
-        driver: bridge

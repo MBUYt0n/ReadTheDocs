@@ -6,7 +6,7 @@ function Login({ onLoginSuccess }) {
 
 	const handleLogin = (e) => {
 		e.preventDefault();
-		fetch("/api/login", {
+		fetch("/auth/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

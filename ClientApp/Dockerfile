@@ -3,7 +3,12 @@ WORKDIR /app/client
 COPY ./client .
 RUN npm install
 RUN npm run build
-# EXPOSE 3000
-# CMD ["npm", "run", "build"]
-# EXPOSE 3000
-# CMD ["serve", "-s", "client/build", "-l", "3000"]
+
+# FROM node:18-alpine
+# WORKDIR /app
+# RUN npm install -g vite@latest
+# RUN npm create vite@latest client -- --template react
+# WORKDIR /app/client
+# RUN npm install
+# RUN npm install react react-dom react-router-dom
+# CMD ["npm", "run", "dev"]
