@@ -15,14 +15,12 @@ function AppWithRouter() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		console.log("loggedIn changed:", loggedIn);
 		if (loggedIn) {
 			navigate("/");
 		}
 	}, [loggedIn, navigate]);
 
 	const handleLoginSuccess = (token) => {
-		console.log("Login successful, token:", token);
 		localStorage.setItem("token", token);
 		setLoggedIn(true);
 	};

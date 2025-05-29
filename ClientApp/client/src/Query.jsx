@@ -19,6 +19,7 @@ function Query() {
 							method: "POST",
 							headers: {
 								"Content-Type": "application/json",
+								"Authorization": `Bearer ${localStorage.getItem("token")}`,
 							},
 							body: JSON.stringify({ query }),
 						})
@@ -33,6 +34,15 @@ function Query() {
 					}}
 				>
 					Ask
+				</button>
+				<button
+					className="logout-button"
+					onClick={() => {
+						localStorage.removeItem("token");
+						window.location.href = "/login";
+					}}
+				>
+					Logout
 				</button>
 			</div>
 		</>

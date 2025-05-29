@@ -19,7 +19,6 @@ function Login({ onLoginSuccess }) {
 			.then(async (response) => {
 				if (response.ok) {
 					let data = await response.json();
-					console.log(data)
 					if (onLoginSuccess) onLoginSuccess(data.token);
 				} else {
 					alert("Login failed. Please check your credentials.");
