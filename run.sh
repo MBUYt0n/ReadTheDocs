@@ -30,3 +30,9 @@ docker rmi $FRONTEND_IMAGE_NAME
 
 echo "Running backend..."
 dotnet run --project $BACKEND_DIR
+
+# docker run -e "ACCEPT_EULA=Y" \
+#            -e "SA_PASSWORD=YourStrong@Password123" \
+#            -p 1433:1433 \
+#            --name mssql \
+#            -d mcr.microsoft.com/mssql/server:2022-latest

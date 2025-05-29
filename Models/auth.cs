@@ -1,32 +1,19 @@
 using Microsoft.AspNetCore.Identity;
 public class LoginRequest
 {
-    public string Username { get; set; }
-    public string Password { get; set; }
-
-    public LoginRequest(string username, string password)
-    {
-        Username = username;
-        Password = password;
-    }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
 }
 
 public class RegisterRequest
 {
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string Email { get; set; }
-
-    public RegisterRequest(string username, string password, string email)
-    {
-        Username = username;
-        Password = password;
-        Email = email;
-    }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
+    public required string Email { get; set; }
 }
 public class User : IdentityUser
 {
-    public User(string userName, string fullName, string email)
+    public User(string userName, string email)
         : base(userName)
     {
         Email = email;

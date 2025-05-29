@@ -13,6 +13,7 @@ function Register({ onRegisterSuccess }) {
 			setError("Passwords do not match.");
 			return;
 		}
+		console.log(username, password, email);
 		fetch("/auth/register", {
 			method: "POST",
 			headers: {
@@ -24,9 +25,10 @@ function Register({ onRegisterSuccess }) {
 				email,
 			}),
 		})
-			.then((response) => {
+			.then(async (response) => {
+				let data = await response.json();
 				if (response.ok) {
-					if (onRegisterSuccess) onRegisterSuccess();
+					if (onRegisterSuccess) onRegisterSuccess(data.token);
 				} else {
 					response
 						.json()

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,13 +43,20 @@ public class LoginController : ControllerBase
     }
 }
 
+
+[ApiController]
+[Route("auth/[controller]")]
 public class RegisterController : ControllerBase
 {
     private readonly UserManager<User> _userManager;
+    private readonly AuthService _authService;
 
-    public RegisterController(UserManager<User> userManager)
+
+
+    public RegisterController(UserManager<User> userManager, AuthService authService)
     {
         _userManager = userManager;
+        _authService = authService;
     }
 
     [HttpPost]
@@ -58,15 +64,26 @@ public class RegisterController : ControllerBase
     {
         if (request == null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
         {
+            Console.WriteLine(request);
             return BadRequest("Invalid registration request.");
         }
 
-        var result = await _userManager.CreateAsync(request, request.Password);
+        var user = new User(request.Username, request.Email)
+        {
+            UserName = request.Username,
+        };
+        var result = await _userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
+            Console.WriteLine("errors\n");
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine($"{error.Code}: {error.Description}");
+            }
             return BadRequest(result.Errors);
         }
+        var token = _authService.GenerateToken(user);
 
-        return Ok("User registered successfully.");
+        return Ok(new { Token = token });
     }
 }
