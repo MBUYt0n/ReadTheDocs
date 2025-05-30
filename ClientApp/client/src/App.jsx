@@ -10,8 +10,11 @@ import Login from "./Login";
 import Register from "./Register";
 import Query from "./Query";
 
+// ...existing code...
 function AppWithRouter() {
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(
+		() => !!localStorage.getItem("token")
+	);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -44,6 +47,7 @@ function AppWithRouter() {
 		</Routes>
 	);
 }
+// ...existing code...
 
 function App() {
 	return (

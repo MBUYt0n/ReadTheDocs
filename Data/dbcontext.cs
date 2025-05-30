@@ -7,4 +7,5 @@ public class ApplicationDbContext : IdentityDbContext<User>
         : base(options)
     {
     }
+    public DbSet<Question> Questions { get; set; }
 }
